@@ -324,6 +324,34 @@ drop.post("updateTodo") { request in
     return try JSON(node: ["message": message])
 }
 
+
+
+drop.get("register") {
+    
+    request in
+    
+    
+    var resultJSON = [String: Bool]()
+    guard let userName = request.headers["userName"],
+        
+        let password = request.headers["password"]
+        
+        else {
+            
+            return try JSON(node: ["success": false])
+            resultJSON = ["success": false]
+            
+    }
+    resultJSON = ["success": true]
+    
+    let newRegisteredUser = RegisteredUser(name: userName,pass: password)
+    let register = SaveRegistrationUser.sharedInstance
+    register.addNewRegisteredUser(item: newRegisteredUser)
+    
+    return try JSON(node: resultJSON)
+    
+}
+
 /* Swift 3 Functional Programming - End */
 
 
